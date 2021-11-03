@@ -1,19 +1,33 @@
+// buscar o elemento no html da minha lista onde irei inserir as vagas
 const lista = document.getElementById('lista')
+
+// atribuindo a endpoint da api do backend em um constante
 const apiUrl = 'http://localhost:3000/filmes';
 
+// modo edicao e id edicao
 let edicao = false;
-let idEdit = 0;
+let idEdicao = 0;
 
+// pegar os dados que o usuario digita no input (Elementos)
 let nome = document.getElementById('nome');
 let imagem = document.getElementById('imagem');
 let genero = document.getElementById('genero');
 let nota = document.getElementById('nota');
 let descricao = document.getElementById('descricao');
 
-const getFilme = async () => {
+
+// faz uma resquisicao do tipo [GET] para o back que recebe todas as vagas cadastradas
+const getFilmes = async () => {
+    // FETCH API api do javascript responsavel por fazer comunicacao entre requicoes http.
+    // faz uma requisicao [GET] para o backend na url http://localhost:3000/vagas
     const response = await fetch(apiUrl)
+    // é a lista de objetos vagas (array de objetos)
     const filmes = await response.json();
+
     console.log(filmes);
+
+    // a gente pega o resultado da api(um array de objetos com as vagas) e itera essa lista com o map
+    // algo parecido com um for.
     filmes.map((filme) => {
         lista.insertAdjacentHTML('beforeend', `
         <div class="col">
@@ -22,11 +36,10 @@ const getFilme = async () => {
             <div class="card-body">
                 <h5 class="card-title">${filme.nome} - Nota: ${filme.nota}</h5>
                 <span class="badge bg-primary">${filme.genero}</span>
-                <p class="card-text"></p>
                 <p class="card-text">${filme.descricao}</p>
                 <div>
-                    <button class="btn btn-primary" onclick="putFilme('${filme.id}')">Editar</button>
-                    <button class="btn btn-danger" onclick="deleteFilme('{'${filme.id}')">Excluir</button>
+                    <button class="btn btn-primary" onclick="editFilme('${filme.id}')">Editar</button>
+                    <button class="btn btn-danger" onclick="deleteFilme('${filme.id}')">Excluir</button>
                 </div>
             </div>
             </div>
@@ -35,29 +48,34 @@ const getFilme = async () => {
     })
 }
 
-const submitForm = (event) => {
+// [POST] envia uma vaga para o backend para ser cadastrada
+
+const submitForm = async (event) => {
+    // previnir que o navegador atualiza a pagina por causa o evento de submit
     event.preventDefault();
 
+    // Estamos construindo um objeto com os valores que estamos pegando no input.
     const filme = {
         nome: nome.value,
         imagem: imagem.value,
         genero: genero.value,
-        nota: nota.value,
+        nota: parseFloat(nota.value),
         descricao: descricao.value
     }
+    // é o objeto preenchido com os valores digitados no input
 
-    if(edicao){
-        putFilme(filme, idEdit);
-    } else{
-        createFilme(filme);
+    if(edicao) {
+        putVaga(filme, idEdicao);
+    } else {
+        createVaga(filme);
     }
 
     clearFields();
     lista.innerHTML = '';
+}
 
-};
-
-const createFilme = async(filme) => {
+const createFilme = async(vaga) => {
+    // estou construindo a requisicao para ser enviada para o backend.
     const request = new Request(`${apiUrl}/add`, {
         method: 'POST',
         body: JSON.stringify(filme),
@@ -66,61 +84,86 @@ const createFilme = async(filme) => {
         })
     })
 
+    // chamamos a funcao fetch de acordo com as nossa configuracaoes de requisicao.
     const response = await fetch(request);
+
     const result = await response.json();
-    alert(result.message);
-    getFilme();
+    // pego o objeto que vem do backend e exibo a msg de sucesso em um alerta.
+    alert(result.message)
+    // vaga cadastrada com sucesso.
+    getFilmes();
+
 }
 
 const putFilme = async(filme, id) => {
-    const request = new Request(`${apiUrl}/edit/${id}`,{
-        method: 'PUT',
+    // estou construindo a requisicao para ser enviada para o backend.
+    const request = new Request(`${apiUrl}/edit/${id}`, {
+        method:  'PUT',
         body: JSON.stringify(filme),
         headers: new Headers({
             'Content-Type': 'application/json'
         })
     })
 
+    // chamamos a funcao fetch de acordo com as nossa configuracaoes de requisicao.
     const response = await fetch(request);
+
     const result = await response.json();
+    // pego o objeto que vem do backend e exibo a msg de sucesso em um alerta.
     alert(result.message)
     edicao = false;
-    idEdit = 0;
-    getFilme();
+    idEdicao = 0;
+    getFilmes();
 }
 
-const deleteFilme = async (id) =>{
+
+// [DELETE] funcao que exclui um vaga de acordo com o seu id
+const deleteFilme = async (id) => {
+    // construir a requiscao de delete
     const request = new Request(`${apiUrl}/delete/${id}`, {
         method: 'DELETE'
     })
 
     const response = await fetch(request);
     const result = await response.json();
-    alert(result.message);
 
+    alert(result.message);
+    
     lista.innerHTML = '';
-    getFilme();
+    getFilmes();
 }
 
-const getFIlmeById = async (id) => {
+
+// [GET] /Vaga/{id} - funcao onde recebe um id via paramtero envia uma requisicao para o backend
+// e retorna a vaga de acordo com esse id.
+const getFilmeById = async (id) => {
     const response = await fetch(`${apiUrl}/${id}`);
     return await response.json();
 }
 
-const editFilme = async(id) => {
-    edicao = true;
-    idEdit = id;
 
+// ao clicar no botao editar
+// ela vai preencher os campos dos inputs
+// para montar o objeto para ser editado
+const editFilme = async (id) => {
+    // habilitando o modo de edicao e enviando o id para variavel global de edicao.
+    edicao = true;
+    idEdicao = id;
+
+    //precismo buscar a informacao da vaga por id para popular os campos
+    // salva os dados da vaga que vamos editar na variavel vaga.
     const filme = await getFilmeById(id);
 
+    //preencher os campos de acordo com a vaga que vamos editar.
     nome.value = filme.nome;
-    imagem.value = filme.imagem;
+    imagem.value =  filme.imagem;
     genero.value = filme.genero;
     nota.value = filme.nota;
     descricao.value = filme.descricao;
 }
 
-const clearFields = () =>{
+
+const clearFields = () => {
     nome.value = '';
     imagem.value = '';
     genero.value = '';
@@ -128,4 +171,4 @@ const clearFields = () =>{
     descricao.value = '';
 }
 
-getFilme();
+getFilmes();

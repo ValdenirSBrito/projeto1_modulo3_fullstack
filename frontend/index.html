@@ -4,20 +4,20 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VAL Filmes</title>
+    <title>Blue - Portal de Vagas</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <header>
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-          <a class="navbar-brand" href="#">Catálogo</a>
+          <a class="navbar-brand" href="#">Portal de Vagas</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -40,25 +40,25 @@
       </nav>
     </header>
     <main class="container">
-        <h1 class="text-center mt-3">Filmes</h1>
+        <h1 class="text-center mt-3">Portal de Vagas Blue Edtech</h1>
         <section>
-            <form onsubmit="submitForm(event)"> 
+            <form onsubmit="submitForm(event)">
                 <div class="row mt-4">
                     <div class="col-4">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="nome" placeholder="Digite o nome do Filme">
+                            <input type="text" class="form-control" id="nome" placeholder="Digite o nome do Filme" required >
                             <label for="nome">Nome</label>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="imagem" placeholder="Digite a url da imagem do Filme">
-                            <label for="imagem">Imagem</label>
+                            <input type="text" class="form-control" id="imagem" placeholder="Digite a url da imagem do Filme.">
+                            <label for="imagem">Empresa</label>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="genero" placeholder="Qual o Gênero do Filme?">
+                            <input type="text" class="form-control" id="genero" placeholder="Digite o Gênero do Filme.">
                             <label for="genero">Gênero</label>
                         </div>
                     </div>
@@ -66,22 +66,23 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="nota" placeholder="Digite uma nota para o filme">
+                            <input type="number" class="form-control" id="nota" placeholder="Digite a nota do Filme">
                             <label for="nota">Nota</label>
                         </div>
                     </div>
+                    
                     <div class="col-4">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="descricao" placeholder="Digite a descrição do filme">
-                            <label for="descricao">Descrição</label>
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Digite a descricao" id="descricao"></textarea>
+                            <label for="descricao">Descricão</label>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col">
                         <div class="d-grid gap-2 d-md-block">
-                            <button class="btn btn-success" type="submit">Adicionar</button>
-                            <button class="btn btn-outline-danger" type="button">Cancelar</button>
+                            <button class="btn btn-success" type="submit">Enviar</button>
+                            <button class="btn btn-outline-danger" type="button">cancelar</button>
                           </div>
                     </div>
                 </div>
@@ -93,9 +94,9 @@
         </section>
     </main>
     <footer class="bg-primary py-2">
-      <p class="text-white text-center mb-0">&copy Desenvolvido por Valdenir Silva Brito</p>
+      <p class="text-white text-center mb-0">&copy - Desenvolvido por Valdenir Silva Brito</p>
     </footer>
-    <script src="./script.js"></script>
+    <script src="scripts.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
