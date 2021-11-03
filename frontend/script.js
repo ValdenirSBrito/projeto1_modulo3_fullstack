@@ -4,11 +4,11 @@ const apiUrl = 'http://localhost:3000/filmes';
 let edicao = false;
 let idEdit = 0;
 
-let titulo = document.getElementById('titulo');
-let ano = document.getElementById('ano');
-let poster = document.getElementById('poster');
+let nome = document.getElementById('nome');
+let imagem = document.getElementById('imagem');
 let genero = document.getElementById('genero');
-let duracao = document.getElementById('duracao');
+let nota = document.getElementById('nota');
+let descricao = document.getElementById('descricao');
 
 const getFilme = async () => {
     const response = await fetch(apiUrl)
@@ -18,12 +18,12 @@ const getFilme = async () => {
         lista.insertAdjacentHTML('beforeend', `
         <div class="col">
             <div class="card">
-            <img src="${filme.poster}" class="card-img-top" alt="...">
+            <img src="${filme.imagem}" class="card-img-top" alt="...">
             <div class="card-body">
-                <h5 class="card-title">${filme.titulo} - ${filme.duracao}</h5>
+                <h5 class="card-title">${filme.nome} - ${filme.nota}</h5>
                 <span class="badge bg-primary">${filme.genero}</span>
                 <p class="card-text"></p>
-                <p class="card-text">${filme.ano}</p>
+                <p class="card-text">${filme.descricao}</p>
                 <div>
                     <button class="btn btn-primary" onclick="putFilme('${filme.id}')">Editar</button>
                     <button class="btn btn-danger" onclick="deleteFilme('{'${filme.id}')">Excluir</button>
@@ -39,11 +39,11 @@ const submitForm = (event) => {
     event.preventDefault();
 
     const filme = {
-        titulo: titulo.value,
-        ano: ano.value,
-        poster: poster.value,
+        nome: nome.value,
+        imagem: imagem.value,
         genero: genero.value,
-        duracao: duracao.value
+        nota: nota.value,
+        descricao: descricao.value
     }
 
     if(edicao){
@@ -90,7 +90,7 @@ const putFilme = async(filme, id) => {
 }
 
 const deleteFilme = async (id) =>{
-    const request = new Request(`${apiUrl}/apagar/${id}`, {
+    const request = new Request(`${apiUrl}/delete/${id}`, {
         method: 'DELETE'
     })
 
@@ -113,19 +113,19 @@ const editFilme = async(id) => {
 
     const filme = await getFilmeById(id);
 
-    titulo.value = filme.titulo;
-    ano.value = filme.ano;
-    poster.value = filme.poster;
+    nome.value = filme.nome;
+    imagem.value = filme.imagem;
     genero.value = filme.genero;
-    duracao.value = filme.duracao;
+    nota.value = filme.nota;
+    descricao.value = filme.descricao;
 }
 
 const clearFields = () =>{
-    titulo.value = '';
-    ano.value = '';
-    poster.value = '';
+    nome.value = '';
+    imagem.value = '';
     genero.value = '';
-    duracao.value = '';
+    nota.value = '';
+    descricao.value = '';
 }
 
 getFilme();
