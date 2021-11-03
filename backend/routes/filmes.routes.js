@@ -4,13 +4,13 @@ const router = express.Router();
 
 const filmes = [
     {
-        id: Date.now(),
-        titulo: 'desenvolvedor front-end',
-        empresa: 'blue',
-        logo: 'https://media-exp1.licdn.com/dms/image/C4E0BAQET4zubIYEjJQ/company-logo_200_200/0/1625249003866?e=2159024400&v=beta&t=AL_GUba4oxMd6gw0PcXSx3EpyI0F4bm5cBWF1m7OLSg',
-        salario: '3000',
-        senioridade: 'junior',
-        descricao: 'vaga de dev front-end xyz bla bla bla'
+        id: 1,
+        nome: 'Velozes e Furiosos 9',
+        imagem: 'https://br.web.img3.acsta.net/c_310_420/pictures/21/04/14/19/06/3385237.jpg',
+        genero: 'Ação',
+        nota: 7,
+        descricao: 'Em Velozes & Furiosos 9, Dominic Toretto (Vin Diesel) e Letty (Michelle Rodriguez) vivem uma vida pacata ao lado de seu filho Brian. Mas eles logo são ameaçados quando o irmão desaparecido de Dom retorna. Jakob (John Cena), um assassino habilidoso e excelente motorista, está trabalhando ao lado de Cipher (Charlize Theron), vilã de Velozes & Furiosos 8. Para enfrentá-los, Toretto vai precisar reunir sua equipe novamente, inclusive Han (Sung Kang), que todos acreditavam estar morto.',
+        assistido: false
     },
 ]
 
@@ -40,15 +40,15 @@ router.post('/add', (req, res) => {
 
     // validacao se existe os campos
 
-    if(!filme || !filme.titulo || !filme.salario || !filme.logo || !filme.salario) {
+    if(!filme || !filme.nome || !filme.imagem || !filme.genero || !filme.nota || !filme.descricao) {
         res.status(400).send({
             message: 'Filme inválido, está faltando os campos titulo e imagem'
         })
         return;
     }
     
-    filme.id = Date.now();
-    filmes.push(vaga);
+    filme.id = filmes[filmes.length -1].id + 1;
+    filmes.push(filme);
     res.status(201).send({
         message: 'Filme Cadastrado com sucesso!',
         data: filme
@@ -79,7 +79,7 @@ router.put('/edit/:id', (req, res) => {
     }
 
     res.send({
-        message: `Filme ${filmes[index].titulo} atualizado com sucesso!`,
+        message: `Filme ${filmes[index].nome} atualizado com sucesso!`,
         data: filmes[index]
     })
 })
@@ -95,7 +95,7 @@ router.delete('/delete/:id', (req, res) => {
     //excluimos a vaga da lista de acordo com o seu indice.
     filmes.splice(index, 1);
     res.send({
-        message: `Filme ${nome.titulo} excluido com sucesso!`,
+        message: `Filme ${nome.nome} excluido com sucesso!`,
     })
 })
 
