@@ -25,8 +25,8 @@ const getFilme = async () => {
                 <p class="card-text"></p>
                 <p class="card-text">${filme.descricao}</p>
                 <div>
-                    <button class="btn btn-primary" onclick="putFilme('${filme.id}')">Editar</button>
-                    <button class="btn btn-danger" onclick="deleteFilme('{'${filme.id}')">Excluir</button>
+                    <button class="btn btn-primary" onclick="editFilme('${filme.id}')">Editar</button>
+                    <button class="btn btn-danger" onclick="deleteFilme('${filme.id}')">Excluir</button>
                 </div>
             </div>
             </div>
@@ -102,7 +102,7 @@ const deleteFilme = async (id) =>{
     getFilme();
 }
 
-const getFIlmeById = async (id) => {
+const getFilmeById = async (id) => {
     const response = await fetch(`${apiUrl}/${id}`);
     return await response.json();
 }
