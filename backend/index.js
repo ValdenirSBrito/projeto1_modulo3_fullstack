@@ -1,4 +1,4 @@
-// Backend - Projeto vagas
+// Backend - Projeto Catálogo de Filmes
 // importacao das libs externas (express e cors)
 const express = require('express');
 const cors = require('cors');
