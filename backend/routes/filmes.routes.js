@@ -94,6 +94,19 @@ router.put('/edit/:id', (req, res) => {
     })
 })
 
+router.put('/:status/:id',(req,res) =>{
+    const idParam = req.params.id;
+    const okParams = req.params.status;
+    let okParamsBolean = (okParams == 'true'); 
+    let index = filmes.findIndex(filme => filme.id == idParam);
+    filmes[index].assistido = okParamsBolean;
+    const statusEditado = filmes[index];    
+    res.send({
+        statusEditado
+    })
+        
+});
+
 // [DELETE] /vagas/delete/{id} = exclui um item da lista de acordo com o seu id
 
 router.delete('/delete/:id', (req, res) => {
