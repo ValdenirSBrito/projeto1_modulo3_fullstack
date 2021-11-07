@@ -12,7 +12,13 @@ main {
 }
 
 header, footer {
+    background-color: brown !important;
+    
+}
+
+header, footer {
     width: 100%;
+    
     
 }
 .card-img-top {
