@@ -16,16 +16,22 @@ const getFilme = async () => {
     const filmes = await response.json();
     console.log(filmes);
     filmes.map((filme) => {
+        if (filme.assistido === true) {
         lista.insertAdjacentHTML('beforeend', `
         <div class="col">
             <div class="card">
             <img src="${filme.imagem}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">${filme.nome} - Nota: ${filme.nota}</h5>
-                <span class="badge bg-primary">${filme.genero}</span>
-                <span class="badge bg-primary" id="status">${filme.status}</span>
+                <span class="badge bg-primary">${filme.genero}</span>                
                 <p class="card-text"></p>
                 <p class="card-text">${filme.descricao}</p>
+                <div>
+                <select name="assistido">
+                <option value="assistido" onchange="assistido('${filme.id}')">Filme Assistido</option>
+                <option value="Nao Assistido" onchange="assistido('${filme.id}')">Filme Não Assistido</option>
+                </select>
+                </div></br>
                 <div>
                     <button class="btn btn-primary" onclick="editFilme('${filme.id}')">Editar</button>
                     <button class="btn btn-danger" onclick="deleteFilme('${filme.id}')">Excluir</button>
@@ -34,7 +40,33 @@ const getFilme = async () => {
             </div>
         </div>
         `)
-    })
+        } else {
+            lista.insertAdjacentHTML('beforeend', `
+        <div class="col">
+            <div class="card">
+            <img src="${filme.imagem}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">${filme.nome} - Nota: ${filme.nota}</h5>
+                <span class="badge bg-primary">${filme.genero}</span>                
+                <p class="card-text"></p>
+                <p class="card-text">${filme.descricao}</p>
+                <div>
+                <select name="assistido">
+                <option value="assistido" onchange="assistido('${filme.id}')">Filme Assistido</option>
+                <option value="Nao Assistido" onchange="assistido('${filme.id}')">Filme Não Assistido</option>
+                </select>
+                </div></br>
+                <div>
+                    <button class="btn btn-primary" onclick="editFilme('${filme.id}')">Editar</button>
+                    <button class="btn btn-danger" onclick="deleteFilme('${filme.id}')">Excluir</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        `)
+        }
+        
+    })    
 }
 
 const submitForm = (event) => {
