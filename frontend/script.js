@@ -9,6 +9,7 @@ let imagem = document.getElementById('imagem');
 let genero = document.getElementById('genero');
 let nota = document.getElementById('nota');
 let descricao = document.getElementById('descricao');
+let status = document.getElementById('status');
 
 const getFilme = async () => {
     const response = await fetch(apiUrl)
@@ -22,6 +23,7 @@ const getFilme = async () => {
             <div class="card-body">
                 <h5 class="card-title">${filme.nome} - Nota: ${filme.nota}</h5>
                 <span class="badge bg-primary">${filme.genero}</span>
+                <span class="badge bg-primary" id="status">${filme.status}</span>
                 <p class="card-text"></p>
                 <p class="card-text">${filme.descricao}</p>
                 <div>
@@ -118,6 +120,16 @@ const editFilme = async(id) => {
     genero.value = filme.genero;
     nota.value = filme.nota;
     descricao.value = filme.descricao;
+}
+
+const statusFilme = async(id) => {
+    edicao = true;
+    idEdit = id;
+
+    const status = await getFilmeById(id);
+
+    nome.value = filme.nome;
+    
 }
 
 const clearFields = () =>{

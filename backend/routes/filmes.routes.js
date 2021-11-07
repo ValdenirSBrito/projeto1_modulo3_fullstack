@@ -64,17 +64,17 @@ const filmes = [
     },
 ]
 
-// [GET] /vagas - Retornar uma lista de vagas
+// [GET] /filmes - Retornar uma lista de filmes
 router.get('/', (req, res) => {
     res.send(filmes);
 })
 
-// [GET] /vagas/{id} - Retornar uma unica vaga por id.
+// [GET] /filmes/{id} - Retornar um unico filmes por id.
 router.get('/:id', (req, res) => {
     const idParam = req.params.id;
     const filme = filmes.find(filme => filme.id == idParam);
 
-    // verifica se a vaga nao foi encontrada
+    // verifica se o filme nao foi encontrado
     if(!filme) {
         res.status(404).send({error: 'Filme não encontrado.'});
         return;
@@ -83,9 +83,9 @@ router.get('/:id', (req, res) => {
     res.send(filme);
 })
 
-// [POST] /vagas/add - Cadastro de uma nova vaga
+// [POST] /filmes/add - Cadastro de um novo filme
 router.post('/add', (req, res) => {
-    // recebi o objeto da vaga para cadastar vinda do cliente (via requisicao http POST)
+    // recebi o objeto do filme para cadastar vindo do cliente (via requisicao http POST)
     const filme = req.body;
 
     // validacao se existe os campos
@@ -105,13 +105,13 @@ router.post('/add', (req, res) => {
     });
 })
 
-// [PUT] /vagas/edit/{id} - Edita uma vaga de acordo com o seu id e objeto recebido
+// [PUT] /filmes/edit/{id} - Edita um filme de acordo com o seu id e objeto recebido
 router.put('/edit/:id', (req, res) => {
-    // o objeto que veio do front para atualizar a vaga com o id recebido
+    // o objeto que veio do front para atualizar o filme com o id recebido
     const filmeEdit = req.body;
     // o id recebido via parametro
     const idParam = req.params.id;
-    // procura o indice da vaga pre cadastrada na lista de acordo com o id recebido para atualizala
+    // procura o indice do filme pre cadastrado na lista de acordo com o id recebido para atualizalo
     let index = filmes.findIndex(filme => filme.id == idParam);
 
     if(index < 0) {
@@ -147,7 +147,7 @@ router.put('/:status/:id',(req,res) =>{
         
 });
 
-// [DELETE] /vagas/delete/{id} = exclui um item da lista de acordo com o seu id
+// [DELETE] /filmes/delete/{id} = exclui um item da lista de acordo com o seu id
 
 router.delete('/delete/:id', (req, res) => {
     // acessamos o id recebido via parametro
@@ -155,7 +155,7 @@ router.delete('/delete/:id', (req, res) => {
 
     const index = filmes.findIndex(filme => filme.id == idParam);
     const nome = filmes[index];
-    //excluimos a vaga da lista de acordo com o seu indice.
+    //excluimos o filme da lista de acordo com o seu indice.
     filmes.splice(index, 1);
     res.send({
         message: `Filme ${nome.nome} excluido com sucesso!`,
