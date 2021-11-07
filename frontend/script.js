@@ -128,26 +128,4 @@ const clearFields = () =>{
     descricao.value = '';
 }
 
-const assistido = async (id) =>{
-    let ok = true
-    const request = new Request(`${apiUrl}/${ok}/${id}`, {
-    method : 'PUT'
-    });
-    const response = await fetch(request);
-    const result = await response.json();
-    lista.innerHTML = '';
-    getFilmes();
-    }
-    
-    const naoAssistido = async (id) =>{
-        let ok = false
-        const request = new Request(`${apiUrl}/${ok}/${id}`, {
-        method : 'PUT'
-        });
-        const response = await fetch(request);
-        const result = await response.json();
-        lista.innerHTML = '';
-        getFilmes();
-        }
-
 getFilme();
